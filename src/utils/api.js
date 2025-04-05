@@ -1,12 +1,18 @@
-// api.js (Mock API)
 let jobsDB = [];
-let idCounter = 1;
+
+const generateJobId = () => {
+  let id;
+  do {
+    id = Math.floor(1000 + Math.random() * 9000); 
+  } while (jobsDB.find((job) => job.id === id)); 
+  return id;
+};
 
 export const uploadJob = async (file) => {
   return new Promise((resolve) => {
     setTimeout(() => {
       const job = {
-        id: idCounter++,
+        id: generateJobId(),
         filename: file.name,
         status: "processing",
       };

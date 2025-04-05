@@ -5,7 +5,7 @@ import {
   fetchJobs,
   deleteJob,
   resubmitJob,
-  pollJobStatus, 
+  pollJobStatus,
 } from "../store/jobsSlice";
 
 const Dashboard = () => {
@@ -35,14 +35,14 @@ const Dashboard = () => {
       dispatch(submitJob(file)).then(() => {
         setFile(null);
         if (fileInputRef.current) {
-          fileInputRef.current.value = ""; // <-- reset input field
+          fileInputRef.current.value = ""; // reset input field
         }
       });
     }
   };
 
-  const handleResubmit = (id,filename) => {
-    dispatch(resubmitJob(id,filename));
+  const handleResubmit = (id, filename) => {
+    dispatch(resubmitJob(id, filename));
   };
 
   const handleDelete = (id) => {
@@ -51,48 +51,62 @@ const Dashboard = () => {
 
   return (
     <div className="p-4 space-y-8">
+      <h1 className="lg:text-2xl font-bold">Job Submission Dashboard</h1>
+
       {/* Upload Section */}
       <form
         onSubmit={handleSubmit}
-        className="flex flex-wrap gap-4 bg-white shadow p-4 rounded items-center"
+        className="flex flex-wrap max-w-lg gap-4 bg-white shadow p-4 rounded items-center"
       >
         <input
           type="file"
           ref={fileInputRef}
           onChange={handleFileChange}
-          className="border border-gray-300 rounded px-3 py-2 file:mr-4 file:py-1 file:px-3 file:border-0 file:rounded-sm file:text-sm file:bg-gray-200"
+          className="border border-gray-300 rounded px-3 py-2 file:mr-4 file:py-1 file:px-3 file:border-0 file:rounded-sm file:text-md file:bg-gray-200"
         />
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+          className="bg-blue-600 text-white ml-6 px-4 py-2 rounded hover:bg-blue-700 transition"
         >
-          Submit Job
+          Submit File
         </button>
       </form>
 
       {/* Job List */}
-      <div className="bg-white shadow rounded p-4 overflow-auto">
-        <h2 className="text-lg font-semibold mb-4">Submitted Jobs</h2>
-        {loading && <p className="text-gray-500">Loading...</p>}
-        {!loading && jobs.length === 0 && (
-          <p className="text-gray-500">No jobs submitted yet.</p>
-        )}
-        {!loading && jobs.length > 0 && (
-          <table className="w-full text-left table-auto text-sm">
-            <thead>
-              <tr className="bg-gray-100 text-gray-700">
-                <th className="p-2">Job ID</th>
-                <th className="p-2">Filename</th>
-                <th className="p-2">Status</th>
-                <th className="p-2">Actions</th>
+      <div className="max-w-[1140px] bg-white rounded-lg shadow-md overflow-x-auto">
+        <h2 className="text-lg font-semibold p-4">Submitted Jobs</h2>
+
+        <table className="w-full text-left">
+          <thead className="bg-gray-300 text-black">
+            <tr>
+              <th className="py-3 px-8">Job ID</th>
+              <th className="py-3 px-8">Filename</th>
+              <th className="py-3 px-8">Status</th>
+              <th className="py-3 px-8">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {loading ? (
+              <tr>
+                <td colSpan="4" className="py-4 px-8 text-gray-500">
+                  Loading...
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {jobs.map((job) => (
-                <tr key={job.id} className="border-t hover:bg-gray-50">
-                  <td className="p-2">{job.id}</td>
-                  <td className="p-2">{job.filename}</td>
-                  <td className="p-2">
+            ) : jobs.length === 0 ? (
+              <tr>
+                <td colSpan="4" className=" text-center py-4 px-8 text-gray-500">
+                  No jobs submitted yet.
+                </td>
+              </tr>
+            ) : (
+              jobs.map((job, index) => (
+                <tr
+                  key={job.id}
+                  className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}
+                >
+                  <td className="py-3 px-8">{job.id}</td>
+                  <td className="py-3 px-8">{job.filename}</td>
+                  <td className="py-3 px-8">
                     <span
                       className={`px-2 py-1 text-sm rounded capitalize ${
                         job.status === "done"
@@ -107,10 +121,10 @@ const Dashboard = () => {
                       {job.status}
                     </span>
                   </td>
-                  <td className="p-2 space-x-2">
+                  <td className="py-3 px-8 space-x-2">
                     {job.status === "error" && (
                       <button
-                        onClick={() => handleResubmit(job.id,job.filename)}
+                        onClick={() => handleResubmit(job.id, job.filename)}
                         className="text-blue-600 hover:underline"
                       >
                         Resubmit
@@ -124,10 +138,10 @@ const Dashboard = () => {
                     </button>
                   </td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );
