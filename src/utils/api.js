@@ -36,15 +36,19 @@ export const deleteJobById = async (id) => {
 export const resubmitJobById = async (id) => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      jobsDB = jobsDB.map((job) =>
-        job.id === id
-          ? { ...job, status: "processing" }
-          : job
-      );
-      resolve({ id, status: "processing" });
+      let updatedJob;
+      jobsDB = jobsDB.map((job) => {
+        if (job.id === id) {
+          updatedJob = { ...job, status: "processing" };
+          return updatedJob;
+        }
+        return job;
+      });
+      resolve(updatedJob); // return full updated job with filename
     }, 800);
   });
 };
+
 
 export const pollJobsStatus = async () => {
   return new Promise((resolve) => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   submitJob,
@@ -12,6 +12,7 @@ const Dashboard = () => {
   const dispatch = useDispatch();
   const { jobs, loading } = useSelector((state) => state.jobs);
   const [file, setFile] = useState(null);
+  const fileInputRef = useRef(null);
 
   // Initial fetch and polling setup
   useEffect(() => {
@@ -31,13 +32,17 @@ const Dashboard = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (file) {
-      dispatch(submitJob(file));
-      setFile(null);
+      dispatch(submitJob(file)).then(() => {
+        setFile(null);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = ""; // <-- reset input field
+        }
+      });
     }
   };
 
-  const handleResubmit = (id) => {
-    dispatch(resubmitJob(id));
+  const handleResubmit = (id,filename) => {
+    dispatch(resubmitJob(id,filename));
   };
 
   const handleDelete = (id) => {
@@ -53,6 +58,7 @@ const Dashboard = () => {
       >
         <input
           type="file"
+          ref={fileInputRef}
           onChange={handleFileChange}
           className="border border-gray-300 rounded px-3 py-2 file:mr-4 file:py-1 file:px-3 file:border-0 file:rounded-sm file:text-sm file:bg-gray-200"
         />
@@ -104,7 +110,7 @@ const Dashboard = () => {
                   <td className="p-2 space-x-2">
                     {job.status === "error" && (
                       <button
-                        onClick={() => handleResubmit(job.id)}
+                        onClick={() => handleResubmit(job.id,job.filename)}
                         className="text-blue-600 hover:underline"
                       >
                         Resubmit

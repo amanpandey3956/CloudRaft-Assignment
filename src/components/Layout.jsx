@@ -15,7 +15,7 @@ const Layout = () => {
         <TopNavbar />
 
         {/* Dashboard Main Content */}
-        <div className="overflow-auto lg:p-2 p-4 lg:ml-6">
+        <div className="h-screen overflow-auto lg:p-2 p-4 lg:ml-6">
           <Outlet />
         </div>
       </div>
