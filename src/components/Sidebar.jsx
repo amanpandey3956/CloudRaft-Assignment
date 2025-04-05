@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Sidebar, Menu, MenuItem, sidebarClasses } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
-import { FaChartBar, FaCar, FaUser, FaMapMarkedAlt, FaUsers, FaCog, FaBell } from "react-icons/fa";
+import { FaChartBar, FaClipboardList, FaTimesCircle } from "react-icons/fa";
 import { FiSettings } from "react-icons/fi";
-import { MdOutlineCancel, MdOutlineReport } from "react-icons/md";
 
 const UserSidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -85,33 +84,15 @@ const UserSidebar = () => {
             <MenuItem icon={<FaChartBar />} component={<Link to="/dashboard" />}>
               Dashboard
             </MenuItem>
-            <MenuItem icon={<FaCar />} component={<Link to="/rides" />}>
-              Rides 
+            <MenuItem icon={<FaClipboardList />} component={<Link to="/job-list" />}>
+              Job List 
             </MenuItem>
-            <MenuItem icon={<FaUser />} component={<Link to="/drivers" />}>
-              Drivers 
-            </MenuItem>
-            <MenuItem icon={<FaMapMarkedAlt />} component={<Link to="/live-map" />}>
-              Live Map 
-            </MenuItem>
-            <MenuItem icon={<FaUsers />} component={<Link to="/users" />}>
-              Users 
-            </MenuItem>
-            <MenuItem icon={<MdOutlineReport />} component={<Link to="/reports" />}>
-              Reports
-            </MenuItem>
-            <MenuItem icon={<FaCog />} component={<Link to="/system-controls" />}>
-              System Controls
-            </MenuItem>
-            <MenuItem icon={<MdOutlineCancel />} component={<Link to="/cancellation-charges" />}>
-              Cancellation Charges 
-            </MenuItem>
-            <MenuItem icon={<FaBell />} component={<Link to="/push-notifications" />}>
-              Push Notifications
+            <MenuItem icon={<FaTimesCircle />} component={<Link to="/failed-jobs" />}>
+              Failed Jobs 
             </MenuItem>
             <MenuItem icon={<FiSettings />} component={<Link to="/settings" />}>
               Settings 
-            </MenuItem>
+            </MenuItem>           
           </Menu>
         </Sidebar>
       </div>
