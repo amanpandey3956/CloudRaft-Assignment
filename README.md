@@ -8,6 +8,6 @@ This Project deployed on Vercel. You can access the live version here: [Live](ht
 
 ### Screenshot
 
-[Dashboard Screenshot](./assets/Screenshot.png)
+[Dashboard Screenshot](./src/assets/Screenshot.png)
 
 
