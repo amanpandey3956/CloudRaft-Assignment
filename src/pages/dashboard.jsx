@@ -68,8 +68,8 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="p-4 space-y-8">
-      <h1 className="lg:text-2xl font-bold">Job Submission Dashboard</h1>
+    <div className="lg:p-4 lg:space-y-8 md:p-4 md:space-y-8 sm:p-4 sm:space-y-8 p-2 space-y-6">
+      <h1 className="lg:text-2xl md:text-2xl sm:text-2xl text-xl font-bold">Job Submission Dashboard</h1>
 
       {/* Upload Section logic */}
       <form
@@ -80,11 +80,11 @@ const Dashboard = () => {
           type="file"
           ref={fileInputRef}
           onChange={handleFileChange}
-          className="border border-gray-300 rounded px-3 py-2 file:mr-4 file:py-1 file:px-3 file:border-0 file:rounded-sm file:text-md file:bg-gray-200"
+          className="w-full sm:w-auto border border-gray-300 rounded px-3 py-2 file:mr-4 file:py-1 file:px-3 file:border-0 file:rounded-sm file:text-md file:bg-gray-200"
         />
         <button
           type="submit"
-          className="bg-blue-600 text-white ml-6 px-4 py-2 rounded hover:bg-blue-700 transition"
+          className="bg-blue-600 text-white lg:ml-6 px-4 py-2 rounded hover:bg-blue-700 transition"
         >
           Submit File
         </button>
@@ -98,7 +98,7 @@ const Dashboard = () => {
           <thead className="bg-gray-300 text-black">
             <tr>
               <th className="py-3 px-8">Job ID</th>
-              <th className="py-3 px-8">Filename</th>
+              <th className="py-3 px-8 hidden sm:table-cell">Filename</th>
               <th className="py-3 px-8">Status</th>
               <th className="py-3 px-8">Actions</th>
             </tr>
@@ -123,7 +123,7 @@ const Dashboard = () => {
                   className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}
                 >
                   <td className="py-3 px-8">{job.id}</td>
-                  <td className="py-3 px-8">{job.filename}</td>
+                  <td className="py-3 px-8 hidden sm:table-cell">{job.filename}</td>
                   <td className="py-3 px-8">
                     <span
                       className={`px-2 py-1 text-sm rounded capitalize ${
